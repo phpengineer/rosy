@@ -16,6 +16,11 @@ class Controller_User extends Controller_Render {
 		}
 		
 		$result = Business::factory('User')->update($address);
+		if($result) {
+			$this->success('设置成功');
+		} else {
+			$this->failed(130001);
+		}
 
 	}
 
