@@ -106,7 +106,7 @@ Kohana::modules(array(
     //'author' => MODPATH . 'author',
     //'redisd' => MODPATH . 'redisd',
     //'curl' => MODPATH . 'curl',
-    //'misc' => MODPATH . 'misc',
+    'misc' => MODPATH . 'misc',
     //'logger' => MODPATH . 'logger',
     //'sphinx' => MODPATH . 'sphinx',
 ));

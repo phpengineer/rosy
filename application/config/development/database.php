@@ -11,7 +11,7 @@ return array
 				'password'   => 'qwert12345',
 				'persistent' => FALSE,
 		),
-		'table_prefix' => 'gvs_',
+		'table_prefix' => 'hx_',
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
 	),

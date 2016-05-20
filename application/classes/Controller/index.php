@@ -2,11 +2,7 @@
 /**
  * hello world
  */
-class Controller_index extends Controller_Render {
-
-	protected $_layout = 'layouts/video';
-	protected $_checkLogin = false;
-
+class Controller_Index extends Controller_Render {
 	/**
 	 * 播放接口
 	 */

@@ -1,7 +1,6 @@
 <?php
 /**
  * 日志信息model
- * @author baishen
  */
 class Model_Log extends Model_BaseModel {
 

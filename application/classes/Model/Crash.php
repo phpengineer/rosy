@@ -1,7 +1,6 @@
 <?php
 /**
  * 异常日志信息model
- * @author baishen
  */
 class Model_Crash extends Model_BaseModel {
 
