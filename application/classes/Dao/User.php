@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 视频信息数据访问层
+ * 用户信息数据访问层
  * @author renhai
  */
 class Dao_User extends Dao {
@@ -15,14 +15,55 @@ class Dao_User extends Dao {
 	const STATUS_OFF = 0; // 状态-正常
 
 	/**
-	 * 通过视频id更新视频的信息
-	 * 
-	 * @param integer $videoId        	
-	 * @param array $values        	
-	 * @return integer
+	 * 插入一条用户信息
+	 * @param array $values
+	 * @return Ambigous <object, mixed, number, Database_Result_Cached, multitype:>
 	 */
-	public function updateByUserId($userId, $values) {
-		return DB::update($this->_tableName)->set($values)->where($this->_primaryKey, '=', $userId)->execute();
+	public function insert(array $values) {
+		return DB::insert($this->_tableName)
+				->columns(array_keys($values))
+				->values(array_values($values))
+				->execute();
 	}
+	
+	/**
+	 * 根据user_id获取用户信息
+	 * @param integer $userId
+	 * @return Ambigous <object, mixed, number, Database_Result_Cached, multitype:>
+	 */
+	public function delete($userId) {
+		return DB::update($this->_tableName)
+				->set(array('status' => self::STATUS_DELETED))
+				->where($this->_primaryKey, '=', $userId)
+				->execute();
+	}
+	
+    
+    /**
+     * 通过user_id更新用户的信息
+     *
+     * @param integer $userId
+     * @param array $values
+     * @return integer
+     */
+    public function updateByUserId($userId, $values) {
+    	return DB::update($this->_tableName)
+    			->set($values)
+    			->where($this->_primaryKey, '=', $userId)
+    			->execute();
+    }
+    
+    /**
+     * 根据user_id获取用户信息
+     * @param integer $userId
+     * @return Ambigous <object, mixed, number, Database_Result_Cached, multitype:>
+     */
+    public function getUserByUserId($userId) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where($this->_primaryKey, '=', $userId)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
 
 }

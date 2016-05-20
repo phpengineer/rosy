@@ -1,6 +1,6 @@
 <?php
 /**
- * 日志信息model
+ * 用户信息model
  */
 class Model_User extends Model_BaseModel {
 
