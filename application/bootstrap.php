@@ -103,15 +103,15 @@ Kohana::modules(array(
     // 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
     // 'unittest'   => MODPATH.'unittest',   // Unit testing
     // 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-    'author' => MODPATH . 'author',
-    'redisd' => MODPATH . 'redisd',
-    'curl' => MODPATH . 'curl',
-    'misc' => MODPATH . 'misc',
-    'logger' => MODPATH . 'logger',
-    'sphinx' => MODPATH . 'sphinx',
+    //'author' => MODPATH . 'author',
+    //'redisd' => MODPATH . 'redisd',
+    //'curl' => MODPATH . 'curl',
+    //'misc' => MODPATH . 'misc',
+    //'logger' => MODPATH . 'logger',
+    //'sphinx' => MODPATH . 'sphinx',
 ));
 
-Kohana::$log->attach(new Log_Database());
+//Kohana::$log->attach(new Log_Database());
 
 Cookie::$salt = 'Adse$isl%AD&owks#';
 Session::$default = 'database'; //memcache,redis可选

@@ -38,7 +38,7 @@ define('CACHEDIR', realpath($application.'/cache').DIRECTORY_SEPARATOR);
 define('LOGDIR', realpath($application.'/logs').DIRECTORY_SEPARATOR);
 
 
-$defaultController = 'main';
+$defaultController = 'index';
 $defaultAction = 'index';
 
 unset($application, $modules, $system, $business);
