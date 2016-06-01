@@ -65,5 +65,16 @@ class Dao_User extends Dao {
     		->as_object($this->_modelName)
     		->execute();
     }
+    
+    /**
+     * 根据mobile获取用户信息
+     */
+    public function getUserByUserId($mobile) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('mobile', '=', $mobile)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
 
 }

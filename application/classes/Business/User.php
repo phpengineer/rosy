@@ -12,5 +12,13 @@ class Business_User extends Business {
 		$userToUpdate['address'] = Arr::get($params, 'address', '');
 		return Dao::factory('User')->updateByUserId($userId, $userToUpdate);
 	}
+	
+	public function insert($values) {
+		return Dao::factory('User')->insert($values);
+	}
+	
+	public function getUserByMobile($mobile) {
+		return Dao::factory('User')->getUserByMobile($mobile);
+	}
 
 }
