@@ -20,5 +20,9 @@ class Business_User extends Business {
 	public function getUserByMobile($mobile) {
 		return Dao::factory('User')->getUserByMobile($mobile);
 	}
+	
+	public function getUserByUsername($username) {
+		return Dao::factory('User')->getUserByUsername($username);
+	}
 
 }
