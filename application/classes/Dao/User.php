@@ -20,10 +20,11 @@ class Dao_User extends Dao {
 	 * @return Ambigous <object, mixed, number, Database_Result_Cached, multitype:>
 	 */
 	public function insert(array $values) {
-		return DB::insert($this->_tableName)
+		list($insertId, $totalRows) = DB::insert($this->_tableName)
 				->columns(array_keys($values))
 				->values(array_values($values))
 				->execute();
+		return $insertId;
 	}
 	
 	/**

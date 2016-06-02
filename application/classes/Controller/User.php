@@ -34,6 +34,7 @@ class Controller_User extends Controller_Render {
 	 	$mobile = !empty($params['mobile']) ? $params['mobile'] : 0;
 	 	$vcode = $params['vcode'];
 	 	$values = array();
+	 	$data = array();
 	 	if(!$username || !$password) {
 	 		$this->failed(100002);
 	 		return;
@@ -42,7 +43,7 @@ class Controller_User extends Controller_Render {
 	 		$this->failed(100103);
 	 		return;
 	 	}
-	 	$users = Business::factory("User")->getUserByMobile($mobile);
+	 	$users = Business::factory('User')->getUserByMobile($mobile);
 	 	if($users->count() > 0) {
 	 		$this->faild(100101);
 	 		return;
@@ -50,9 +51,17 @@ class Controller_User extends Controller_Render {
 	 	$values['username'] = $username;
 	 	$values['password'] = md5($password);
 	 	$values['mobile'] = $mobile;
-	 	$result = Business::factory("User")->insert($values);
-	 	if($result) {
-	 		$this->success('注册成功！');
+	 	$insertId = Business::factory('User')->insert($values);
+	 	if($insertId) {
+	 		$result = Business::factory('User')->getUserByUserId($insertId)->current();
+	 		$data['userId'] = $result->id;
+	 		$data['username'] = $result->username;
+	 		$data['avatar'] = $result->headimgurl;
+	 		$data['mobile'] = $result->mobile;
+	 		$data['address'] = $result->address;
+	 		$data['token'] = 'dfafasdfdsafasdf';//此token放到redis里，redis控制是否过期
+	 		unset($result);
+	 		$this->_data = $data;
 	 	} else {
 	 		$this->faild(100104);
 	 	}
