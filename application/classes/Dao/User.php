@@ -11,8 +11,8 @@ class Dao_User extends Dao {
 	protected $_primaryKey = 'id';
 	protected $_modelName = 'Model_User';
 
-	const STATUS_DELETED = - 1; // 状态-删除
-	const STATUS_OFF = 0; // 状态-正常
+	const STATUS_DELETED = 0; // 状态-删除
+	const STATUS_ON = 1; // 状态-正常
 
 	/**
 	 * 插入一条用户信息
