@@ -272,5 +272,19 @@ class Misc {
 		);
 		$loggerCrash->write(array($crashMessage));
 	}
+	
+	public static function checkMobile($mobile, $pattern = FALSE) {
+
+		if (!$pattern) {
+			$pattern = '/(^1[34578]\d{9}$)/';
+		}
+
+		$result = preg_match($pattern, $mobile, $match);
+		if (empty($match)) {
+			return FALSE;
+		}
+
+		return TRUE;
+	}
 
 }

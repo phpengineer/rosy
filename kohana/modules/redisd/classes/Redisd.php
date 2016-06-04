@@ -36,8 +36,9 @@ class Redisd {
 			}
 
 			if ($server['password'] !== NULL) {
+				$password = $server['password'];
 				$result = $redis->auth($password);
-				if (strtolower($result) != 'ok') {
+				if (strtolower($result) != true) {
 					throw new Exception("Invaild redis [ " . $type . " ] password: {$password}");
 				}
 			}
