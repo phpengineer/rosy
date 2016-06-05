@@ -8,5 +8,9 @@
  	public function getGoodsByCategoryId($categoryId, $pageSize, $offset) {
  		return Dao::factory('Goods')->getGoodsByCategoryId($categoryId, $pageSize, $offset);
  	}
+ 	
+ 	public function getGoodsByKeyword($keyword, $pageSize, $offset) {
+ 		return Dao::factory('Goods')->getGoodsByKeyword($keyword, $pageSize, $offset);
+ 	}
  }
 ?>

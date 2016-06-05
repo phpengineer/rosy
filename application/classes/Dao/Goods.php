@@ -39,5 +39,25 @@ class Dao_Goods extends Dao {
     		->execute();
     }
     
+    /**
+     *  根据关键字获取商品信息
+     * @param string keyword
+     * @param int pageSize    每页个数
+     * @param int offset  页数
+     * @return Ambigous <object, mixed, number, Database_Result_Cached, multitype:>
+     */
+    public function getGoodsByKeyword($keyword, $pageSize, $offset) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('status', '=', self::STATUS_ON)
+    		->and_where('display', '=', self::DISPLAY_ON)
+    		->and_where('name', 'like', "%$keyword%")
+    		->order_by('hits', 'DESC')
+    		->offset(($offset>1 ? ($offset-1)*$pageSize : 0))
+			->limit($pageSize)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
+    
 
 }
