@@ -67,6 +67,52 @@ class Controller_Goods extends Controller_Render {
 	 	}
 	 	$this->_data = $return;
 	}
+	
+	/**
+	 * 商品详情
+	 */
+	public function action_detail() {
+		$params = json_decode(Arr::get($_POST, 'params', ''), true);
+	 	$goodsId = !empty(trim($params['goodsID'])) ? $params['goodsID'] : 0;
+	 	if($goodsId) {
+	 		return $this->failed(201);
+	 	}
+	 	$result = Business::factory('Goods')->getGoodsByGoodsId($goodsId);
+	 	$return = array();
+	 	if($result->count()) {
+	 		$goods = $result->current();
+ 			$lottery = Business::factory('Period')->getLotteryCountByGoodsId($goods->id)->current();
+ 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
+ 			$suppliers = Business::factory('Supplier')->getSupplierBySupplierId($goods->supplier_id);
+ 			$lotteries = Business::factory('Period')->getLotteryByLotteryId($lottery->no);
+ 			$return['goodsID'] = $goods->id;
+ 			$return['name'] = $goods->name;
+ 			$return['icon'] = $picture->path;
+ 			$return['image'] = array($picture->picture);
+ 			$return['price'] = $goods->price;
+ 			$return['detail'] = $goods->content;
+ 			$return['onlineLotteryCount'] = $lottery->no;
+ 			if($suppliers->count()) {
+ 				$supplier = $suppliers->current();
+ 				$return['supplier'] = array(
+ 					'supplierID' => $supplier->supplier_id,
+ 					'name' => $supplier->name,
+ 					'tel' => $supplier->phone,
+ 					'address' => $supplier->address
+ 				);
+ 			} else {
+ 				$return['supplier'] = array(
+ 					'supplierID' => 0,
+ 					'name' => '',
+ 					'tel' => '',
+ 					'address' => ''
+ 				);
+ 			}
+ 			foreach($lotteries as $key => $value) {
+ 				$goodsResult = Business::factory('Goods')->getGoodsByGoodsId($value->sid);
+ 			}
+	 	}
+	}
 
 }
 ?>

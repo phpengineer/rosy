@@ -3,7 +3,6 @@
 /**
  * 缓存时间管理类
  *
- * @author pengmeng
  */
 class Cache_Expire {
 

@@ -2,7 +2,6 @@
 
 /**
  * 商品分类数据访问层
- * @author renhai
  */
 class Dao_Goods extends Dao {
 
@@ -55,6 +54,21 @@ class Dao_Goods extends Dao {
     		->order_by('hits', 'DESC')
     		->offset(($offset>1 ? ($offset-1)*$pageSize : 0))
 			->limit($pageSize)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
+    
+    /**
+     *  根据商品ID获取商品信息
+     * @param int goodsId
+     * @return Ambigous <object, mixed, number, Database_Result_Cached, multitype:>
+     */
+    public function getGoodsByGoodsId($goodsId) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('status', '=', self::STATUS_ON)
+    		->and_where('display', '=', self::DISPLAY_ON)
+    		->and_where('id', '=', $goodsId)
     		->as_object($this->_modelName)
     		->execute();
     }

@@ -12,5 +12,9 @@
  	public function getGoodsByKeyword($keyword, $pageSize, $offset) {
  		return Dao::factory('Goods')->getGoodsByKeyword($keyword, $pageSize, $offset);
  	}
+ 	
+ 	public function getGoodsByGoodsId($goodsId) {
+ 		return Dao::factory('Goods')->getGoodsByGoodsId($goodsId);
+ 	}
  }
 ?>

@@ -2,8 +2,7 @@
 /*
  * 系统服务控制
  * Created on 2016
- * @xiongrenhai
- */
+  */
  class Controller_Service extends Controller_Render {
  	 	
  	 	/**

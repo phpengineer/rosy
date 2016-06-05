@@ -2,7 +2,6 @@
 
 /**
  * 商品图片数据访问层
- * @author renhai
  */
 class Dao_Picture extends Dao {
 

@@ -2,7 +2,6 @@
 
 /**
  * 商品期数数据访问层
- * @author renhai
  */
 class Dao_Period extends Dao {
 

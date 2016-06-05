@@ -2,7 +2,6 @@
 
 /**
  * 商品分类数据访问层
- * @author renhai
  */
 class Dao_Category extends Dao {
 

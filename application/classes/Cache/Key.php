@@ -3,7 +3,6 @@
 /**
  * 缓存key名称管理类
  *
- * @author pengmeng
  */
 class Cache_Key {
 

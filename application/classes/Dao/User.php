@@ -2,7 +2,6 @@
 
 /**
  * 用户信息数据访问层
- * @author renhai
  */
 class Dao_User extends Dao {
 
