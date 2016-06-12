@@ -1,5 +1,5 @@
 <?php
 return array(
-	'host' => 'http://api.v.dev.gomeplus.com',
+	'host' => 'http://139.129.164.156',
 	'encrypt_key' => ')&GY*^#<)(x7^#ME'
 );

@@ -1,4 +1,5 @@
 <?php
 return array(
-	'host' => 'http://gvs.dev.gomeplus.com',
+		'host' => 'http://139.129.164.156',
+		
 );

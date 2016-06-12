@@ -37,7 +37,7 @@ class Controller_Goods extends Controller_Render {
 	 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 	 			$return[$key]['goodsID'] = $goods->id;
 	 			$return[$key]['name'] = $goods->name;
-	 			$return[$key]['icon'] = $picture->path;
+	 			$return[$key]['icon'] = Kohana::$config->load('default.host') . $picture->path;
 	 			$return[$key]['onlineLotteryCount'] = $lottery->no;
 	 		}
 	 	}
