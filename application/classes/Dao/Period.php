@@ -10,8 +10,9 @@ class Dao_Period extends Dao {
 	protected $_primaryKey = 'id';
 	protected $_modelName = 'Model_Period';
 
-	const STATE_DELETED = 0; // 状态-删除
-	const STATE_ON = 1; // 状态-正常
+	const STATE_ON = 0; // 状态:进行中
+	const STATE_JIANG = 1; // 状态：开奖中
+	const STATE_OFF = 2;//状态：结束
 
 	
 	
@@ -25,6 +26,22 @@ class Dao_Period extends Dao {
     	return DB::select('*')
     		->from($this->_tableName)
     		->where('sid', '=', $sid)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
+    
+    /**
+     * 分页获取期彩
+     * @param int $pageSize
+     * @param int $offset
+     * @return Ambigous <object, mixed, number, Database_Result_Cached, multitype:>
+     */
+    public function getLottery($pageSize, $offset) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('state', '=', self::STATE_OFF)
+    		->offset(($offset>1 ? ($offset-1)*$pageSize : 0))
+    		->limit($pageSize)
     		->as_object($this->_modelName)
     		->execute();
     }

@@ -8,5 +8,9 @@
  	public function getLotteryCountByGoodsId($sid) {
  		return Dao::factory('Period')->getLotteryCountByGoodsId($sid);
  	}
+ 	
+ 	public function getLottery($pageSize, $offset) {
+ 		return Dao::factory('Period')->getLottery($pageSize, $offset);
+ 	}
  }
 ?>

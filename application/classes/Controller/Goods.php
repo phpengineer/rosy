@@ -61,7 +61,7 @@ class Controller_Goods extends Controller_Render {
 	 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 	 			$return[$key]['goodsID'] = $goods->id;
 	 			$return[$key]['name'] = $goods->name;
-	 			$return[$key]['icon'] = $picture->path;
+	 			$return[$key]['icon'] = Kohana::$config->load('default.host') . $picture->path;
 	 			$return[$key]['onlineLotteryCount'] = $lottery->no;
 	 		}
 	 	}
@@ -87,8 +87,8 @@ class Controller_Goods extends Controller_Render {
  			$lotteries = Business::factory('Period')->getLotteryByLotteryId($lottery->no);
  			$return['goodsID'] = $goods->id;
  			$return['name'] = $goods->name;
- 			$return['icon'] = $picture->path;
- 			$return['image'] = array($picture->picture);
+ 			$return['icon'] = Kohana::$config->load('default.host') . $picture->path;
+ 			$return['image'] = array(Kohana::$config->load('default.host') . $picture->picture);
  			$return['price'] = $goods->price;
  			$return['detail'] = $goods->content;
  			$return['onlineLotteryCount'] = $lottery->no;
