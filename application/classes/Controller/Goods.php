@@ -28,7 +28,7 @@ class Controller_Goods extends Controller_Render {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
 	 	$pageSize = !empty($params['pageSize']) ? $params['pageSize'] : 20;
 	 	$offset = !empty($params['offset']) ? $params['offset'] : 0;
-	 	$typeId = !empty($parmas['typeID']) ? $params['typeID'] : 0;
+	 	$typeId = !empty($params['typeID']) ? $params['typeID'] : 0;
 	 	$result = Business::factory('Goods')->getGoodsByCategoryId($typeId, $pageSize, $offset);
 	 	$return = array();
 	 	if($result->count()) {
