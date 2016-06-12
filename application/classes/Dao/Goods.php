@@ -73,5 +73,20 @@ class Dao_Goods extends Dao {
     		->execute();
     }
     
+    /**
+     *  根据分类ID获取商品信息
+     * @param int goodsId
+     * @return Ambigous <object, mixed, number, Database_Result_Cached, multitype:>
+     */
+    public function getGoodsByCategoryId($categoryId) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('status', '=', self::STATUS_ON)
+    		->and_where('display', '=', self::DISPLAY_ON)
+    		->and_where('category', '=', $categoryId)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
+    
 
 }
