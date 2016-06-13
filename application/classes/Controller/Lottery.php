@@ -90,7 +90,7 @@ class Controller_Lottery extends Controller_Render {
 		$lotteryDetail['goods']['price'] = $goods->price;
 		$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
 		$lotteryDetail['goods']['onlineLotteryCount'] = $lottery->no;
-		if($value->state == 2) {
+		if($value->state == Dao_Period::STATE_COMPLETE) {
 			$lotteryDetail['luckyTicket']['ticketID'] = $value->id;
 			$lotteryDetail['luckyTicket']['code'] = $value->no;
 			$lotteryDetail['luckyDog']['userID'] = $value->uid;

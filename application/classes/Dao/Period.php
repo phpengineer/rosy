@@ -12,7 +12,7 @@ class Dao_Period extends Dao {
 
 	const STATE_ON = 0; // 状态:进行中
 	const STATE_JIANG = 1; // 状态：开奖中
-	const STATE_OFF = 2;//状态：结束
+	const STATE_COMPLETE = 2;//状态：结束
 
 	
 	
