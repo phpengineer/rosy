@@ -65,5 +65,13 @@ class Dao_Period extends Dao {
     		->execute();
     }
     
+    public function getCompleteLottery() {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('state', '=', self::STATE_COMPLETE)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
+    
 
 }

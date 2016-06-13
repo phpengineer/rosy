@@ -116,7 +116,7 @@ class Controller_Goods extends Controller_Render {
  				$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
  				$lotteryDetail['name'] = '第' . $lottery->no .'期';
  				$lotteryDetail['totalTicketCount'] = $goodsResult->price;
- 				$lotteryDetail['totalTicketCount'] = $lottery->number;
+ 				$lotteryDetail['currentTicketCount'] = $lottery->number;
  				$lotteryDetail['totalUserCount'] = $userCount->count();
  				$return['lotteries'] = $lotteryDetail;
  			}

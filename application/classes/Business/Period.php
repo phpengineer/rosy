@@ -20,5 +20,9 @@
  	public function getLotteryById($id) {
  		return Dao::factory('Period')->getLotteryById($id);
  	}
+ 	
+ 	public function getCompleteLottery() {
+ 		return Dao::factory('Period')->getCompleteLottery();
+ 	}
  }
 ?>
