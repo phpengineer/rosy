@@ -95,7 +95,7 @@ class Controller_Lottery extends Controller_Render {
 			$lotteryDetail['luckyTicket']['code'] = $value->no;
 			$lotteryDetail['luckyDog']['userID'] = $value->uid;
 			$user = Business::factory('User')->getUserByUserId($value->uid);
-			$lotteryDetail['luckyDog']['userID'] = $user->nickname;
+			$lotteryDetail['luckyDog']['userID'] = $user->mobile ? $user->mobile : $user->username;
 		} else {
 			$lotteryDetail['luckyTicket']['ticketID'] = 0;
 			$lotteryDetail['luckyTicket']['code'] = 0;
