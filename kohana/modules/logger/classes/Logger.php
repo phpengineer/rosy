@@ -1,7 +1,6 @@
 <?php
 /**
  * 日志类
- * @author baishen
  */
 class Logger {
 

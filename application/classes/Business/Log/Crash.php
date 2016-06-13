@@ -1,7 +1,6 @@
 <?php
 /**
  * 异常日志数据操作接口
- * @author baishen
  */
 class Business_Log_Crash extends Business {
 

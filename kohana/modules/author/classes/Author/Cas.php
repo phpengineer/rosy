@@ -1,7 +1,6 @@
 <?php
 /**
  * Cas登录数据解析类
- * @author baishen
  */
 class Author_Cas {
 

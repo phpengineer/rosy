@@ -4,8 +4,6 @@
  *
  * @package    Kohana
  * @category   Session
- * @author     dongjie
- * @copyright  (c) 2014 Sina Video Team
  * @license    NULL
  */
 class Kohana_Session_Redis extends Session {

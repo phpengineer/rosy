@@ -4,7 +4,6 @@
  *
  * @package    Kohana
  * @category   Session
- * @copyright  (c) 2014 Sina Video Team
  * @license    NULL
  */
 class Kohana_Session_Memcache extends Session {

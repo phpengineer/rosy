@@ -1,7 +1,6 @@
 <?php
 /**
  * 清除页面squid缓存
- * @author baishen
  *
  * $response = Squid::instance()
  * 				->playUrl($playUrl)

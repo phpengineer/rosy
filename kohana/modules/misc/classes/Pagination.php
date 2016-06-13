@@ -1,7 +1,6 @@
 <?php
 /**
  * 分页类
- * @author dongjie
  */
 class Pagination {
 
