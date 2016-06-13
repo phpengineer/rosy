@@ -119,6 +119,9 @@ class Controller_User extends Controller_Render {
 	 	$this->success('退出登陆');
 	 }
 	 
+	 /**
+	  * 设置图像
+	  */
 	 public function action_avatar() {
 	 	$postImage = file_get_contents('php://input', 'r');
 	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
@@ -137,12 +140,12 @@ class Controller_User extends Controller_Render {
 	 			$uploadPath = DOCROOT . "/usr/share/nginx/html/rosy/upload/";
 	 			if(!is_dir($uploadPath)) {
 	 				if(!mkdir($uploadPath, 0777, TRUE)) {
-						return $this->failed(12001);
+						return $this->failed(21001);
 	 				}
 	 			}
 	 	
 	 			if(!is_writable($uploadPath)) {
-	 				$this->failed(12002);
+	 				$this->failed(21002);
 	 			}
 	 			$tmpImageFilename = md5(uniqid('yiyuanduobao'));
 	 			$extension = '.png';
@@ -154,7 +157,7 @@ class Controller_User extends Controller_Render {
 	 			$imageSize = filesize($sourcePicFilePath);
 	 			if($imageSize && ($imageSize > (1024*1024*10))) {
 	 				@unlink($sourcePicFilePath);
-	 				return $this->failed(12003);
+	 				return $this->failed(21003);
 	 			} else {
 	 				$values = array('userID'=> $userId, 'headimgurl' => Kohana::$config->load('default.host') . $sourcePicFilePath);
 	 				$result = Business::factory('User')->update($values);
@@ -165,6 +168,48 @@ class Controller_User extends Controller_Render {
 	 			
 	 		}
 	 	}
+	 }
+	 
+	 /**
+	  * 设置手机号
+	  */
+	 public function action_mobile() {
+	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
+	 	$userId = !empty($params['userID']) ? $params['userID'] : 0;
+	 	$oldVcode = !empty($params['oldvcode']) ? $params['oldvcode'] : '';
+	 	$newVcode = !empty($params['newvcode']) ? $params['newvcode'] : '';
+	 	$newMobile = !empty($params['newMobile']) ? $params['newMobile'] : 0;
+	 	$oldMobile = !empty($params['oldMobile']) ? $params['oldMobile'] : 0;
+	 	if(Cache_Key::vcode($oldMobile)) {
+	 		return $this->failed(120001);
+	 	}
+	 	if($oldVcode != Cache_Key::vcode($oldMobile))  {
+	 		return $this->failed(120000);
+	 	}
+	 	if(!Misc::checkMobile($newMobile)) {
+	 		return $this->failed(120100);
+	 	}
+	 	$user = Business::factory('User')->getUserByMobile($newMobile);
+	 	if($user->count()) {
+	 		return $this->failed(120101);
+	 	}
+	 	if(Cache_Key::vcode($newMobile)) {
+	 		return $this->failed(120103);
+	 	}
+	 	if($newVcode != Cache_Key::vcode($newMobile))  {
+	 		return $this->failed(120102);
+	 	}
+	 	$values = array('userID' => $userId, 'mobile' => $newMobile);
+	 	$result = Business::factory('User')->update($values);
+	 	if($result) {
+	 		$this->success('设置手机号成功');
+	 	} else {
+	 		$this->failed(130000);
+	 	}
+	 	
+	 	
+	 	
+	 	
 	 }
 
 }
