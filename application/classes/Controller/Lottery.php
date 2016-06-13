@@ -66,6 +66,9 @@ class Controller_Lottery extends Controller_Render {
 		$this->_data = $return;
 	}
 	
+	/**
+	 * 期彩详情
+	 */
 	public function action_detail() {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
 		$lotteryId = !empty($params['lotteryID']) ? $params['lotteryID'] : 0;
@@ -87,6 +90,19 @@ class Controller_Lottery extends Controller_Render {
 		$lotteryDetail['goods']['price'] = $goods->price;
 		$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
 		$lotteryDetail['goods']['onlineLotteryCount'] = $lottery->no;
+		if($value->state == 2) {
+			$lotteryDetail['luckyTicket']['ticketID'] = $value->id;
+			$lotteryDetail['luckyTicket']['code'] = $value->no;
+			$lotteryDetail['luckyDog']['userID'] = $value->uid;
+			$user = Business::factory('User')->getUserByUserId($value->uid);
+			$lotteryDetail['luckyDog']['userID'] = $user->nickname;
+		} else {
+			$lotteryDetail['luckyTicket']['ticketID'] = 0;
+			$lotteryDetail['luckyTicket']['code'] = 0;
+			$lotteryDetail['luckyDog']['userID'] = 0;
+			$lotteryDetail['luckyDog']['userID'] = 0;
+		}
+		
 		$return[] = $lotteryDetail;
 		$this->_data = $return;
 	}

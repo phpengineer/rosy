@@ -24,5 +24,10 @@ class Business_User extends Business {
 	public function getUserByUsername($username) {
 		return Dao::factory('User')->getUserByUsername($username);
 	}
+	
+	public function getUserByUserId($userId) {
+		return Dao::factory('User')->getUserByUserId($userId);
+	}
+	
 
 }
