@@ -111,5 +111,12 @@ class Controller_User extends Controller_Render {
  		unset($user);
  		$this->_data = $data;
 	 }
+	 
+	 /**
+	  * 退出登录
+	  */
+	 public function action_logout() {
+	 	$this->success('退出登陆');
+	 }
 
 }
