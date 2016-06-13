@@ -99,7 +99,7 @@ class Controller_User extends Controller_Render {
 	 		}
 	 		$user = Business::factory('User')->getUserByMobile($mobile)->current();
 	 		if(!$user) {
-	 			return $this->failed(110000);	
+	 			return $this->failed(110000);
 	 		}
 	 	}
 	 	$data['userId'] = $user->id;
@@ -117,6 +117,54 @@ class Controller_User extends Controller_Render {
 	  */
 	 public function action_logout() {
 	 	$this->success('退出登陆');
+	 }
+	 
+	 public function action_avatar() {
+	 	$postImage = file_get_contents('php://input', 'r');
+	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
+	 	$userId = !empty($params['userID']) ? $params['userID'] : 0;
+	 	if($userId) {
+	 		return $this->failed(201);
+	 	}
+	 	if($postImage) {
+	 		//16进制转换成二进制
+	 		//$byte = pack("H*",$postImage);
+	 		$byte = $postImage;
+	 		$im = imagecreatefromstring($byte);
+	 		if ($im === false) {
+	 			return $this->failed(201);
+	 		} else {
+	 			$uploadPath = DOCROOT . "/usr/share/nginx/html/rosy/upload/";
+	 			if(!is_dir($uploadPath)) {
+	 				if(!mkdir($uploadPath, 0777, TRUE)) {
+						return $this->failed(12001);
+	 				}
+	 			}
+	 	
+	 			if(!is_writable($uploadPath)) {
+	 				$this->failed(12002);
+	 			}
+	 			$tmpImageFilename = md5(uniqid('yiyuanduobao'));
+	 			$extension = '.png';
+	 			$sourcePicFilePath = $uploadPath . $tmpImageFilename . $extension;
+	 			header('Content-Type: image/png');
+	 			imagepng($im, $sourcePicFilePath);
+	 			imagedestroy($im);
+	 			//检查图片大小,最高10M
+	 			$imageSize = filesize($sourcePicFilePath);
+	 			if($imageSize && ($imageSize > (1024*1024*10))) {
+	 				@unlink($sourcePicFilePath);
+	 				return $this->failed(12003);
+	 			} else {
+	 				$values = array('userID'=> $userId, 'headimgurl' => Kohana::$config->load('default.host') . $sourcePicFilePath);
+	 				$result = Business::factory('User')->update($values);
+	 				if($result) {
+	 					$this->_data = $values['headimgurl'];
+	 				}
+	 			}
+	 			
+	 		}
+	 	}
 	 }
 
 }
