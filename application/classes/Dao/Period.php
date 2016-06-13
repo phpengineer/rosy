@@ -39,9 +39,28 @@ class Dao_Period extends Dao {
     public function getLottery($pageSize, $offset) {
     	return DB::select('*')
     		->from($this->_tableName)
-    		->where('state', '=', self::STATE_OFF)
+    		->where('state', '=', self::STATE_ON)
     		->offset(($offset>1 ? ($offset-1)*$pageSize : 0))
     		->limit($pageSize)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
+    
+    public function getLotteryByGoodsId($goodsId, $pageSize, $offset) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('state', '=', self::STATE_ON)
+    		->and_where('sid', '=', $goodsId)
+    		->offset(($offset>1 ? ($offset-1)*$pageSize : 0))
+    		->limit($pageSize)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
+    
+    public function getLotteryById($id) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('id', '=', $id)
     		->as_object($this->_modelName)
     		->execute();
     }

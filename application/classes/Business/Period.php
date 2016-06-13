@@ -12,5 +12,13 @@
  	public function getLottery($pageSize, $offset) {
  		return Dao::factory('Period')->getLottery($pageSize, $offset);
  	}
+ 	
+ 	public function getLotteryByGoodsId($goodsId, $pageSize, $offset) {
+ 		return Dao::factory('Period')->getLotteryByGoodsId($goodsId, $pageSize, $offset);
+ 	}
+ 	
+ 	public function getLotteryById($id) {
+ 		return Dao::factory('Period')->getLotteryById($id);
+ 	}
  }
 ?>
