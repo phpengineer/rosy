@@ -74,7 +74,7 @@ class Controller_Goods extends Controller_Render {
 	public function action_detail() {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
 	 	$goodsId = !empty(trim($params['goodsID'])) ? $params['goodsID'] : 0;
-	 	if($goodsId) {
+	 	if(!$goodsId) {
 	 		return $this->failed(201);
 	 	}
 	 	$result = Business::factory('Goods')->getGoodsByGoodsId($goodsId);
