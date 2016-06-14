@@ -108,7 +108,9 @@ class Controller_Lottery extends Controller_Render {
 		$this->_data = $return;
 	}
 	
-	
+	/**
+	 * 开奖期彩
+	 */
 	public function action_complete() {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
 		$pageSize = !empty($params['pageSize']) ? $params['pageSize'] : 20;

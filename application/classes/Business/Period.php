@@ -24,5 +24,9 @@
  	public function getCompleteLottery() {
  		return Dao::factory('Period')->getCompleteLottery();
  	}
+ 	
+ 	public function getPrizeByUserId($userId, $pageSize, $offset) {
+ 		return Dao::factory('Period')->getPrizeByUserId($userId, $pageSize, $offset);
+ 	}
  }
 ?>
