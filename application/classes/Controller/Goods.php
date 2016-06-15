@@ -52,7 +52,7 @@ class Controller_Goods extends Controller_Render {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
 	 	$pageSize = !empty(trim($params['pageSize'])) ? $params['pageSize'] : 20;
 	 	$offset = !empty($params['offset']) ? $params['offset'] : 0;
-	 	$keyword = !empty($parmas['keyword']) ? $params['keyword'] : '';
+	 	$keyword = !empty($params['keyword']) ? $params['keyword'] : '';
 	 	$result = Business::factory('Goods')->getGoodsByKeyword($keyword, $pageSize, $offset);
 	 	$return = array();
 	 	if($result->count()) {
@@ -111,12 +111,12 @@ class Controller_Goods extends Controller_Render {
  			$return['lotteries'] = array();
  			foreach($lotteries as $key => $value) {
  				$lotteryDetail = array();
- 				$lotteryDetail['lotteryID'] = $lottery->no;
+ 				$lotteryDetail['lotteryID'] = $value->no;
  				$goodsResult = Business::factory('Goods')->getGoodsByGoodsId($value->sid);
  				$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
- 				$lotteryDetail['name'] = '第' . $lottery->no .'期';
+ 				$lotteryDetail['name'] = '第' . $value->no .'期';
  				$lotteryDetail['totalTicketCount'] = $goodsResult->price;
- 				$lotteryDetail['currentTicketCount'] = $lottery->number;
+ 				$lotteryDetail['currentTicketCount'] = $value->number;
  				$lotteryDetail['totalUserCount'] = $userCount->count();
  				$return['lotteries'] = $lotteryDetail;
  			}
