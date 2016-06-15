@@ -74,7 +74,6 @@ class Controller_Lottery extends Controller_Render {
 		$lotteryId = !empty($params['lotteryId']) ? $params['lotteryId'] : 0;
 		$value = Business::factory('Period')->getLotteryById($lotteryId)->current();
 		$lotteryDetail = array();
-		$return = array();
 		$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 		$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 		$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
@@ -104,8 +103,7 @@ class Controller_Lottery extends Controller_Render {
 			$lotteryDetail['luckyDog']['username'] = 0;
 		}
 		
-		$return[] = $lotteryDetail;
-		$this->_data = $return;
+		$this->_data = $lotteryDetail;
 	}
 	
 	/**
