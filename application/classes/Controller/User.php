@@ -104,7 +104,7 @@ class Controller_User extends Controller_Render {
 	 	}
 	 	$data['userId'] = $user->id;
  		$data['username'] = $user->username;
- 		$data['avatar'] = $user->headimgurl;
+ 		$data['avatar'] = $user->headimgurl ? $user->headimgurl : '';
  		$data['mobile'] = $user->mobile;
  		$data['address'] = $user->address;
  		$data['token'] = 'dfafasdfdsafasdf';//此token放到redis里，redis控制是否过期

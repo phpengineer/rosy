@@ -79,7 +79,7 @@ class Dao_Period extends Dao {
     		->from($this->_tableName)
     		->where('state', '=', self::STATE_COMPLETE)
     		->and_where('uid', '=', $userId)
-    		->order_by('kaijiang_time', 'DESC')
+    		->order_by('kaijang_time', 'DESC')
     		->offset(($offset>1 ? ($offset-1)*$pageSize : 0))
     		->limit($pageSize)
     		->as_object($this->_modelName)

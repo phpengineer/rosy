@@ -18,7 +18,7 @@ class Controller_User extends Controller_Render {
 			$lotteryDetail['lotteryId'] = $lottery->id;
 			$lotteryDetail['name'] = '第' . $lottery->no .'期';
 			$lotteryDetail['price'] = $goods->price;
-			$lotteryDetail['completeTime'] = $value->kaijiang_time;
+			$lotteryDetail['completeTime'] = $value->kaijang_time;
 			$lotteryDetail['goods']['goodsId'] = $goods->id;
 			$lotteryDetail['goods']['name'] = $goods->name;
 			$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;

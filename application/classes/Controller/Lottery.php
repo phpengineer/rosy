@@ -72,9 +72,11 @@ class Controller_Lottery extends Controller_Render {
 	public function action_detail() {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
 		$lotteryId = !empty($params['lotteryId']) ? $params['lotteryId'] : 0;
-		$value = Business::factory('Period')->getLotteryById($lotteryId);
+		$value = Business::factory('Period')->getLotteryById($lotteryId)->current();
 		$lotteryDetail = array();
 		$return = array();
+print_r($value);
+exit;
 		$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 		$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 		$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
@@ -85,7 +87,7 @@ class Controller_Lottery extends Controller_Render {
 		$lotteryDetail['currentTicketCount'] = $value->number;
 		$lotteryDetail['totalUserCount'] = $userCount->count();
 		$lotteryDetail['state'] = $value->state;
-		$lotteryDetail['completeTime'] = $value->kaijiang_time;
+		$lotteryDetail['completeTime'] = $value->kaijang_time;
 		$lotteryDetail['goods']['goodsId'] = $goods->id;
 		$lotteryDetail['goods']['name'] = $goods->name;
 		$lotteryDetail['goods']['price'] = $goods->price;
@@ -127,7 +129,7 @@ class Controller_Lottery extends Controller_Render {
 			$lotteryDetail['price'] = $goods->price;
 			$lotteryDetail['totalTicketCount'] = $goods->price;
 			$lotteryDetail['totalUserCount'] = $userCount->count();
-			$lotteryDetail['completeTime'] = $value->kaijiang_time;
+			$lotteryDetail['completeTime'] = $value->kaijang_time;
 			$lotteryDetail['goods']['goodsId'] = $goods->id;
 			$lotteryDetail['goods']['name'] = $goods->name;
 			$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
