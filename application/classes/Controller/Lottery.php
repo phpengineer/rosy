@@ -75,8 +75,6 @@ class Controller_Lottery extends Controller_Render {
 		$value = Business::factory('Period')->getLotteryById($lotteryId)->current();
 		$lotteryDetail = array();
 		$return = array();
-print_r($value);
-exit;
 		$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 		$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 		$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
