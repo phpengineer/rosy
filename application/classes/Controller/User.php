@@ -81,7 +81,7 @@ class Controller_User extends Controller_Render {
 	 	$username = !empty(trim($params['username'])) ? $params['username'] : '';
 	 	$password = !empty($params['password']) ? $params['password'] : '';
 	 	$mobile = !empty($params['mobile']) ? $params['mobile'] : 0;
-	 	$vcode = $params['vcode'];
+	 	$vcode = !empty($params['vcode']) ? $params['vcode'] : 0;
 	 	$data = array();
 	 	if($password && $username) {
 	 		$user = Business::factory('User')->getUserByUsername($username)->current();

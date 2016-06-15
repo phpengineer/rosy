@@ -6,7 +6,7 @@
  class Business_Supplier extends Business { 
 
  	public function getSupplierBySupplierId($supplierId) {
- 		return Dao::factory('Period')->getSupplierBySupplierId($supplierId);
+ 		return Dao::factory('Supplier')->getSupplierBySupplierId($supplierId);
  	}
  }
 ?>
