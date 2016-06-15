@@ -16,13 +16,13 @@ class Controller_Lottery extends Controller_Render {
 			$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 			$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
-			$lotteryDetail['lotteryID'] = $value->no;
+			$lotteryDetail['lotteryId'] = $value->no;
 			$lotteryDetail['name'] = '第' . $value->no .'期';
 			$lotteryDetail['price'] = $goods->price;
 			$lotteryDetail['totalTicketCount'] = $goods->price;
 			$lotteryDetail['currentTicketCount'] = $value->number;
 			$lotteryDetail['totalUserCount'] = $userCount->count();
-			$lotteryDetail['goods']['goodsID'] = $goods->id;
+			$lotteryDetail['goods']['goodsId'] = $goods->id;
 			$lotteryDetail['goods']['name'] = $goods->name;
 			$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
 			$lotteryDetail['goods']['onlineLotteryCount'] = $value->no;
@@ -39,7 +39,7 @@ class Controller_Lottery extends Controller_Render {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
 		$pageSize = !empty($params['pageSize']) ? $params['pageSize'] : 20;
 		$offset = !empty($params['offset']) ? $params['offset'] : 0;
-		$goodsId = !empty($params['goodsID']) ? $params['goodsID'] : 0;
+		$goodsId = !empty($params['goodsId']) ? $params['goodsId'] : 0;
 		if($goodsId) {
 			return $this->failed(200);
 		}
@@ -50,13 +50,13 @@ class Controller_Lottery extends Controller_Render {
 			$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 			$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
-			$lotteryDetail['lotteryID'] = $value->no;
+			$lotteryDetail['lotteryId'] = $value->id;
 			$lotteryDetail['name'] = '第' . $value->no .'期';
 			$lotteryDetail['price'] = $goods->price;
 			$lotteryDetail['totalTicketCount'] = $goods->price;
 			$lotteryDetail['currentTicketCount'] = $value->number;
 			$lotteryDetail['totalUserCount'] = $userCount->count();
-			$lotteryDetail['goods']['goodsID'] = $goods->id;
+			$lotteryDetail['goods']['goodsId'] = $goods->id;
 			$lotteryDetail['goods']['name'] = $goods->name;
 			$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
 			$lotteryDetail['goods']['onlineLotteryCount'] = $value->no;
@@ -71,14 +71,16 @@ class Controller_Lottery extends Controller_Render {
 	 */
 	public function action_detail() {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
-		$lotteryId = !empty($params['lotteryID']) ? $params['lotteryID'] : 0;
+		$lotteryId = !empty($params['lotteryId']) ? $params['lotteryId'] : 0;
 		$value = Business::factory('Period')->getLotteryById($lotteryId);
 		$lotteryDetail = array();
 		$return = array();
+		print_r($value);
+		exit;
 		$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 		$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 		$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
-		$lotteryDetail['lotteryID'] = $value->no;
+		$lotteryDetail['lotteryId'] = $value->no;
 		$lotteryDetail['name'] = '第' . $value->no .'期';
 		$lotteryDetail['price'] = $goods->price;
 		$lotteryDetail['totalTicketCount'] = $goods->price;
@@ -86,21 +88,21 @@ class Controller_Lottery extends Controller_Render {
 		$lotteryDetail['totalUserCount'] = $userCount->count();
 		$lotteryDetail['state'] = $value->state;
 		$lotteryDetail['completeTime'] = $value->kaijiang_time;
-		$lotteryDetail['goods']['goodsID'] = $goods->id;
+		$lotteryDetail['goods']['goodsId'] = $goods->id;
 		$lotteryDetail['goods']['name'] = $goods->name;
 		$lotteryDetail['goods']['price'] = $goods->price;
 		$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
 		$lotteryDetail['goods']['onlineLotteryCount'] = $value->no;
 		if($value->state == Dao_Period::STATE_COMPLETE) {
-			$lotteryDetail['luckyTicket']['ticketID'] = $value->id;
+			$lotteryDetail['luckyTicket']['ticketId'] = $value->id;
 			$lotteryDetail['luckyTicket']['code'] = $value->no;
-			$lotteryDetail['luckyDog']['userID'] = $value->uid;
+			$lotteryDetail['luckyDog']['userId'] = $value->uid;
 			$user = Business::factory('User')->getUserByUserId($value->uid);
 			$lotteryDetail['luckyDog']['username'] = $user->mobile ? $user->mobile : $user->username;
 		} else {
-			$lotteryDetail['luckyTicket']['ticketID'] = 0;
+			$lotteryDetail['luckyTicket']['ticketId'] = 0;
 			$lotteryDetail['luckyTicket']['code'] = 0;
-			$lotteryDetail['luckyDog']['userID'] = 0;
+			$lotteryDetail['luckyDog']['userId'] = 0;
 			$lotteryDetail['luckyDog']['username'] = 0;
 		}
 		
@@ -122,25 +124,25 @@ class Controller_Lottery extends Controller_Render {
 			$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 			$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
-			$lotteryDetail['lotteryID'] = $value->no;
+			$lotteryDetail['lotteryId'] = $value->no;
 			$lotteryDetail['name'] = '第' . $value->no .'期';
 			$lotteryDetail['price'] = $goods->price;
 			$lotteryDetail['totalTicketCount'] = $goods->price;
 			$lotteryDetail['totalUserCount'] = $userCount->count();
 			$lotteryDetail['completeTime'] = $value->kaijiang_time;
-			$lotteryDetail['goods']['goodsID'] = $goods->id;
+			$lotteryDetail['goods']['goodsId'] = $goods->id;
 			$lotteryDetail['goods']['name'] = $goods->name;
 			$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
 			if($value->state == Dao_Period::STATE_COMPLETE) {
-				$lotteryDetail['luckyTicket']['ticketID'] = $value->id;
+				$lotteryDetail['luckyTicket']['ticketId'] = $value->id;
 				$lotteryDetail['luckyTicket']['code'] = $value->no;
-				$lotteryDetail['luckyDog']['userID'] = $value->uid;
+				$lotteryDetail['luckyDog']['userId'] = $value->uid;
 				$user = Business::factory('User')->getUserByUserId($value->uid);
 				$lotteryDetail['luckyDog']['username'] = $user->mobile ? $user->mobile : $user->username;
 			} else {
-				$lotteryDetail['luckyTicket']['ticketID'] = 0;
+				$lotteryDetail['luckyTicket']['ticketId'] = 0;
 				$lotteryDetail['luckyTicket']['code'] = 0;
-				$lotteryDetail['luckyDog']['userID'] = 0;
+				$lotteryDetail['luckyDog']['userId'] = 0;
 				$lotteryDetail['luckyDog']['username'] = 0;
 			}
 			$return[] = $lotteryDetail;

@@ -13,7 +13,7 @@ class Controller_Goods extends Controller_Render {
 		$return = array();
 		if($types->count()) {
 			foreach($types as $key => $type) {
-				$return[$key]['typeID'] = $type->id;
+				$return[$key]['typeId'] = $type->id;
 				$return[$key]['name'] = $type->title;
 				$return[$key]['icon'] = $type->icon;
 			}
@@ -28,14 +28,14 @@ class Controller_Goods extends Controller_Render {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
 	 	$pageSize = !empty($params['pageSize']) ? $params['pageSize'] : 20;
 	 	$offset = !empty($params['offset']) ? $params['offset'] : 0;
-	 	$typeId = !empty($params['typeID']) ? $params['typeID'] : 0;
+	 	$typeId = !empty($params['typeId']) ? $params['typeId'] : 0;
 	 	$result = Business::factory('Goods')->getGoodsByCategoryId($typeId, $pageSize, $offset);
 	 	$return = array();
 	 	if($result->count()) {
 	 		foreach($result as $key => $goods) {
 	 			$lottery = Business::factory('Period')->getLotteryCountByGoodsId($goods->id)->current();
 	 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
-	 			$return[$key]['goodsID'] = $goods->id;
+	 			$return[$key]['goodsId'] = $goods->id;
 	 			$return[$key]['name'] = $goods->name;
 	 			$return[$key]['icon'] = Kohana::$config->load('default.host') . $picture->path;
 	 			$return[$key]['onlineLotteryCount'] = $lottery->no;
@@ -59,7 +59,7 @@ class Controller_Goods extends Controller_Render {
 	 		foreach($result as $key => $goods) {
 	 			$lottery = Business::factory('Period')->getLotteryCountByGoodsId($goods->id)->current();
 	 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
-	 			$return[$key]['goodsID'] = $goods->id;
+	 			$return[$key]['goodsId'] = $goods->id;
 	 			$return[$key]['name'] = $goods->name;
 	 			$return[$key]['icon'] = Kohana::$config->load('default.host') . $picture->path;
 	 			$return[$key]['onlineLotteryCount'] = $lottery->no;
@@ -73,7 +73,7 @@ class Controller_Goods extends Controller_Render {
 	 */
 	public function action_detail() {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
-	 	$goodsId = !empty(trim($params['goodsID'])) ? $params['goodsID'] : 0;
+	 	$goodsId = !empty(trim($params['goodsId'])) ? $params['goodsId'] : 0;
 	 	if(!$goodsId) {
 	 		return $this->failed(201);
 	 	}
@@ -85,7 +85,7 @@ class Controller_Goods extends Controller_Render {
  			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
  			$suppliers = Business::factory('Supplier')->getSupplierBySupplierId($goods->supplier_id);
  			$lotteries = Business::factory('Period')->getLotteryByLotteryId($lottery->no);
- 			$return['goodsID'] = $goods->id;
+ 			$return['goodsId'] = $goods->id;
  			$return['name'] = $goods->name;
  			$return['icon'] = Kohana::$config->load('default.host') . $picture->path;
  			$return['image'] = array(Kohana::$config->load('default.host') . $picture->picture);
@@ -95,14 +95,14 @@ class Controller_Goods extends Controller_Render {
  			if($suppliers->count()) {
  				$supplier = $suppliers->current();
  				$return['supplier'] = array(
- 					'supplierID' => $supplier->supplier_id,
+ 					'supplierId' => $supplier->supplier_id,
  					'name' => $supplier->name,
  					'tel' => $supplier->phone,
  					'address' => $supplier->address
  				);
  			} else {
  				$return['supplier'] = array(
- 					'supplierID' => 0,
+ 					'supplierId' => 0,
  					'name' => '',
  					'tel' => '',
  					'address' => ''
@@ -111,7 +111,7 @@ class Controller_Goods extends Controller_Render {
  			$return['lotteries'] = array();
  			foreach($lotteries as $key => $value) {
  				$lotteryDetail = array();
- 				$lotteryDetail['lotteryID'] = $value->no;
+ 				$lotteryDetail['lotteryId'] = $value->no;
  				$goodsResult = Business::factory('Goods')->getGoodsByGoodsId($value->sid);
  				$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
  				$lotteryDetail['name'] = '第' . $value->no .'期';

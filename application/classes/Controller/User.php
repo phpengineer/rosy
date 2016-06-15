@@ -125,7 +125,7 @@ class Controller_User extends Controller_Render {
 	 public function action_avatar() {
 	 	$postImage = file_get_contents('php://input', 'r');
 	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
-	 	$userId = !empty($params['userID']) ? $params['userID'] : 0;
+	 	$userId = !empty($params['userId']) ? $params['userId'] : 0;
 	 	if($userId) {
 	 		return $this->failed(201);
 	 	}
@@ -159,7 +159,7 @@ class Controller_User extends Controller_Render {
 	 				@unlink($sourcePicFilePath);
 	 				return $this->failed(21003);
 	 			} else {
-	 				$values = array('userID'=> $userId, 'headimgurl' => Kohana::$config->load('default.host') . $sourcePicFilePath);
+	 				$values = array('userId'=> $userId, 'headimgurl' => Kohana::$config->load('default.host') . $sourcePicFilePath);
 	 				$result = Business::factory('User')->update($values);
 	 				if($result) {
 	 					$this->_data = $values['headimgurl'];
@@ -175,7 +175,7 @@ class Controller_User extends Controller_Render {
 	  */
 	 public function action_mobile() {
 	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
-	 	$userId = !empty($params['userID']) ? $params['userID'] : 0;
+	 	$userId = !empty($params['userId']) ? $params['userId'] : 0;
 	 	$oldVcode = !empty($params['oldvcode']) ? $params['oldvcode'] : '';
 	 	$newVcode = !empty($params['newvcode']) ? $params['newvcode'] : '';
 	 	$newMobile = !empty($params['newMobile']) ? $params['newMobile'] : 0;
@@ -199,7 +199,7 @@ class Controller_User extends Controller_Render {
 	 	if($newVcode != Cache_Key::vcode($newMobile))  {
 	 		return $this->failed(120102);
 	 	}
-	 	$values = array('userID' => $userId, 'mobile' => $newMobile);
+	 	$values = array('userId' => $userId, 'mobile' => $newMobile);
 	 	$result = Business::factory('User')->update($values);
 	 	if($result) {
 	 		$this->success('设置手机号成功');

@@ -6,13 +6,13 @@
  	 	
  	 	/**
  	 	 *  创建订单
- 	 	 * @param int lotteryId 期彩ID
+ 	 	 * @param int lotteryId 期彩Id
  	 	 * @param int ticketCount 份数
  	 	 * @return json 
  	 	 */	
  		public function action_create() {
  			$params = json_decode(Arr::get($_POST, 'params', ''), true);
- 			$lotteryId = Arr::get($params, 'lottoryID', 0);
+ 			$lotteryId = Arr::get($params, 'lottoryId', 0);
  			$ticketCount = Arr::get($params, 'ticketCount', 0);
 			if(!$ticketCount) {
 				return $this->failed(900002);
