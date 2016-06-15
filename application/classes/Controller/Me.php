@@ -15,7 +15,7 @@ class Controller_User extends Controller_Render {
 			$lotteryDetail = array();
 			$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
-			$lotteryDetail['lotteryId'] = $lottery->no;
+			$lotteryDetail['lotteryId'] = $lottery->id;
 			$lotteryDetail['name'] = '第' . $lottery->no .'期';
 			$lotteryDetail['price'] = $goods->price;
 			$lotteryDetail['completeTime'] = $value->kaijiang_time;

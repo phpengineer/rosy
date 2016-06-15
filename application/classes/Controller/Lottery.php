@@ -16,7 +16,7 @@ class Controller_Lottery extends Controller_Render {
 			$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 			$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
-			$lotteryDetail['lotteryId'] = $value->no;
+			$lotteryDetail['lotteryId'] = $value->id;
 			$lotteryDetail['name'] = '第' . $value->no .'期';
 			$lotteryDetail['price'] = $goods->price;
 			$lotteryDetail['totalTicketCount'] = $goods->price;
@@ -75,12 +75,10 @@ class Controller_Lottery extends Controller_Render {
 		$value = Business::factory('Period')->getLotteryById($lotteryId);
 		$lotteryDetail = array();
 		$return = array();
-		print_r($value);
-		exit;
 		$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 		$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 		$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
-		$lotteryDetail['lotteryId'] = $value->no;
+		$lotteryDetail['lotteryId'] = $value->id;
 		$lotteryDetail['name'] = '第' . $value->no .'期';
 		$lotteryDetail['price'] = $goods->price;
 		$lotteryDetail['totalTicketCount'] = $goods->price;
@@ -124,7 +122,7 @@ class Controller_Lottery extends Controller_Render {
 			$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 			$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
-			$lotteryDetail['lotteryId'] = $value->no;
+			$lotteryDetail['lotteryId'] = $value->id;
 			$lotteryDetail['name'] = '第' . $value->no .'期';
 			$lotteryDetail['price'] = $goods->price;
 			$lotteryDetail['totalTicketCount'] = $goods->price;

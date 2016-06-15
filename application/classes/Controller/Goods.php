@@ -84,7 +84,7 @@ class Controller_Goods extends Controller_Render {
  			$lottery = Business::factory('Period')->getLotteryCountByGoodsId($goods->id)->current();
  			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
  			$suppliers = Business::factory('Supplier')->getSupplierBySupplierId($goods->supplier_id);
- 			$lotteries = Business::factory('Period')->getLotteryByLotteryId($lottery->no);
+ 			$lotteries = Business::factory('Period')->getLotteryByLotteryId($lottery->id);
  			$return['goodsId'] = $goods->id;
  			$return['name'] = $goods->name;
  			$return['icon'] = Kohana::$config->load('default.host') . $picture->path;
@@ -111,7 +111,7 @@ class Controller_Goods extends Controller_Render {
  			$return['lotteries'] = array();
  			foreach($lotteries as $key => $value) {
  				$lotteryDetail = array();
- 				$lotteryDetail['lotteryId'] = $value->no;
+ 				$lotteryDetail['lotteryId'] = $value->id;
  				$goodsResult = Business::factory('Goods')->getGoodsByGoodsId($value->sid);
  				$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
  				$lotteryDetail['name'] = '第' . $value->no .'期';
