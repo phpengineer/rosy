@@ -28,7 +28,7 @@ class Controller_User extends Controller_Render {
 	 */
 	 public function action_register() {
 	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
-	 	$username = !empty(trim($params['username'])) ? $params['username'] : '';
+	 	$username = !empty($params['username']) ? $params['username'] : '';
 	 	$password = !empty($params['password']) ? $params['password'] : '';
 	 	$mobile = !empty($params['mobile']) ? $params['mobile'] : 0;
 	 	$vcode = $params['vcode'];
@@ -78,7 +78,7 @@ class Controller_User extends Controller_Render {
 	  */
 	 public function action_login() {
 	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
-	 	$username = !empty(trim($params['username'])) ? $params['username'] : '';
+	 	$username = !empty($params['username']) ? $params['username'] : '';
 	 	$password = !empty($params['password']) ? $params['password'] : '';
 	 	$mobile = !empty($params['mobile']) ? $params['mobile'] : 0;
 	 	$vcode = !empty($params['vcode']) ? $params['vcode'] : 0;

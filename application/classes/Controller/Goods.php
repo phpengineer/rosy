@@ -50,7 +50,7 @@ class Controller_Goods extends Controller_Render {
 	 */
 	public function action_search() {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
-	 	$pageSize = !empty(trim($params['pageSize'])) ? $params['pageSize'] : 20;
+	 	$pageSize = !empty($params['pageSize']) ? $params['pageSize'] : 20;
 	 	$offset = !empty($params['offset']) ? $params['offset'] : 0;
 	 	$keyword = !empty($params['keyword']) ? $params['keyword'] : '';
 	 	$result = Business::factory('Goods')->getGoodsByKeyword($keyword, $pageSize, $offset);
@@ -73,7 +73,7 @@ class Controller_Goods extends Controller_Render {
 	 */
 	public function action_detail() {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
-	 	$goodsId = !empty(trim($params['goodsId'])) ? $params['goodsId'] : 0;
+	 	$goodsId = !empty($params['goodsId']) ? $params['goodsId'] : 0;
 	 	if(!$goodsId) {
 	 		return $this->failed(201);
 	 	}
@@ -88,7 +88,7 @@ class Controller_Goods extends Controller_Render {
  			$return['goodsId'] = $goods->id;
  			$return['name'] = $goods->name;
  			$return['icon'] = Kohana::$config->load('default.host') . $picture->path;
- 			$return['image'] = array(Kohana::$config->load('default.host') . $picture->picture);
+ 			$return['image'] = array(Kohana::$config->load('default.host') . $picture->path);
  			$return['price'] = $goods->price;
  			$return['detail'] = $goods->content;
  			$return['onlineLotteryCount'] = $lottery->no;
@@ -112,13 +112,13 @@ class Controller_Goods extends Controller_Render {
  			foreach($lotteries as $key => $value) {
  				$lotteryDetail = array();
  				$lotteryDetail['lotteryId'] = $value->id;
- 				$goodsResult = Business::factory('Goods')->getGoodsByGoodsId($value->sid);
+ 				$goodsResult = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
  				$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
  				$lotteryDetail['name'] = '第' . $value->no .'期';
  				$lotteryDetail['totalTicketCount'] = $goodsResult->price;
  				$lotteryDetail['currentTicketCount'] = $value->number;
  				$lotteryDetail['totalUserCount'] = $userCount->count();
- 				$return['lotteries'] = $lotteryDetail;
+ 				$return['lotteries'][] = $lotteryDetail;
  			}
 	 	}
 	 	$this->_data = $return;
