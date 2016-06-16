@@ -1,7 +1,6 @@
 <?php
 /**
  * Base62 将整型转为62进制数字（有大数问题）
- * @author Sundj
  * @since 2014.04.07
  */
 class Base62 {

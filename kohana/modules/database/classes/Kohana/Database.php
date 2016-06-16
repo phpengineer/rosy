@@ -23,7 +23,7 @@ abstract class Kohana_Database {
 	const INSERT =  2;
 	const UPDATE =  3;
 	const DELETE =  4;
-	const REPLACE = 5;	// add by Sundj 2014.03.25
+	const REPLACE = 5;	
 
 	/**
 	 * @var  string  default instance name

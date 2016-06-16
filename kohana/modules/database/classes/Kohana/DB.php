@@ -2,7 +2,7 @@
 /**
  * Provides a shortcut to get Database related objects for [making queries](../database/query).
  *
- * Last edit by Sundj 2014.03.25 改写Kohana_DB提供mysql replace()能力
+ * Last edit 2014.03.25 改写Kohana_DB提供mysql replace()能力
  *
  * Shortcut     | Returned Object
  * -------------|---------------

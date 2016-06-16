@@ -2,7 +2,6 @@
 /**
  * acl控制类
  * 	实现校验当前用户的对系统资源的权限鉴别
- * @author Sundj
  *
  */
 class ACL {
