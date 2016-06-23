@@ -14,12 +14,15 @@
  			$params = json_decode(Arr::get($_POST, 'params', ''), true);
  			$lotteryId = Arr::get($params, 'lottoryId', 0);
  			$ticketCount = Arr::get($params, 'ticketCount', 0);
+ 			$userId = Arr::get($params, 'userId', '');
 			if(!$ticketCount) {
 				return $this->failed(900002);
 			}
 			$createSn = $this->createSn();
-			
-			
+			$order = Business::factory('Order')->create($lotteryId, $this->create_sn(), $ticketCount, $userId, 2);
+			if($order) {
+				$this->success('成功创建订单!');
+			}
  		}
  		
  		private function createSn() {
