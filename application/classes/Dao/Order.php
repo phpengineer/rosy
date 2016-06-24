@@ -21,5 +21,15 @@ class Dao_Order extends Dao {
     		->execute();
     }
     
+    public function getOrdersByUserId($userId, $pageSize, $offset) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('uid', '=', $userId)
+    		->offset(($offset>1 ? ($offset-1)*$pageSize : 0))
+    		->limit($pageSize)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
+    
 
 }

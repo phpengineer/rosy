@@ -24,6 +24,10 @@
  		}
  		return Dao::factory('Order')->insert($data);
  	}
+ 	
+ 	public function getOrdersByUserId($userId, $pageSize, $offset) {
+ 		return Dao::factory('Order')->getOrdersByUserId($userId, $pageSize, $offset);
+ 	}
  }
 ?>
 	
