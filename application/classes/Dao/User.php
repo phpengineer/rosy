@@ -87,5 +87,13 @@ class Dao_User extends Dao {
     		->as_object($this->_modelName)
     		->execute();
     }
+    
+    public function getUserBynickname($nickname) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('nickname', '=', $nickname)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
 
 }

@@ -29,5 +29,13 @@ class Business_User extends Business {
 		return Dao::factory('User')->getUserByUserId($userId);
 	}
 	
+	public function getUserBynickname($nickname) {
+		return Dao::factory('User')->getUserBynickname($nickname);
+	}
+	
+	public function updateByUserId($userId, $value) {
+		return Dao::factory('User')->updateByUserId($userId, $value);
+	}
+	
 
 }

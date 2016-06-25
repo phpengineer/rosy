@@ -207,8 +207,26 @@ class Controller_User extends Controller_Render {
 	 		$this->failed(130000);
 	 	}
 	 	
-	 	
-	 	
+	 }
+	 
+	 
+	 public function action_nickname() {
+	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
+	 	$userId = !empty($params['userId']) ? $params['userId'] : 0;
+	 	$nickname = !empty($params['nickname']) ? $params['nickname'] : '';
+	 	$value = array();
+	 	if(!$nickname) {
+	 		return $this->failed(140000);
+	 	}
+	 	$user = Business::factory('User')->getUserBynickName($nickname);
+	 	if($user->count()) {
+	 		return $this->failed(140001);
+	 	}
+	 	$value['nickname'] = $nickname;
+	 	$result = Business::factory('User')->updateByUserId($userId, $value);
+	 	if($result) {
+	 		$this->success('设置昵称成功!');
+	 	}
 	 	
 	 }
 
