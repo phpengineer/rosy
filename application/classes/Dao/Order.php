@@ -31,5 +31,14 @@ class Dao_Order extends Dao {
     		->execute();
     }
     
+    
+    public function getOrderByOrderId($orderId) {
+    	return DB::select('*')
+    		->from($this->_tableName)
+    		->where('order_id', '=', $orderId)
+    		->as_object($this->_modelName)
+    		->execute();
+    }
+    
 
 }

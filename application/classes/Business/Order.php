@@ -28,6 +28,10 @@
  	public function getOrdersByUserId($userId, $pageSize, $offset) {
  		return Dao::factory('Order')->getOrdersByUserId($userId, $pageSize, $offset);
  	}
+ 	
+ 	public function getOrderByOrderId($orderId) {
+ 		return Dao::factory('Order')->getOrderByOrderId($orderId);
+ 	}
  }
 ?>
 	
