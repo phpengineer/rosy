@@ -12,21 +12,25 @@ class Controller_Lottery extends Controller_Render {
 		$lottery = Business::factory('Period')->getLottery($pageSize, $offset);
 		$return = array();
 		foreach($lottery as $value) {
-			$lotteryDetail = array();
+		$lotteryDetail = array();
 			$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
-			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
-			$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
-			$lotteryDetail['lotteryId'] = $value->id;
-			$lotteryDetail['name'] = '第' . $value->no .'期';
-			$lotteryDetail['price'] = $goods->price;
-			$lotteryDetail['totalTicketCount'] = $goods->price;
-			$lotteryDetail['currentTicketCount'] = $value->number;
-			$lotteryDetail['totalUserCount'] = $userCount->count();
-			$lotteryDetail['goods']['goodsId'] = $goods->id;
-			$lotteryDetail['goods']['name'] = $goods->name;
-			$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
-			$lotteryDetail['goods']['onlineLotteryCount'] = $value->no;
-			$return[] = $lotteryDetail;
+			if(!$goods) {
+				continue;
+			} else {
+				$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
+				$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
+				$lotteryDetail['lotteryId'] = $value->id;
+				$lotteryDetail['name'] = '第' . $value->no .'期';
+				$lotteryDetail['price'] = $goods->price;
+				$lotteryDetail['totalTicketCount'] = $goods->price;
+				$lotteryDetail['currentTicketCount'] = $value->number;
+				$lotteryDetail['totalUserCount'] = $userCount->count();
+				$lotteryDetail['goods']['goodsId'] = $goods->id;
+				$lotteryDetail['goods']['name'] = $goods->name;
+				$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
+				$lotteryDetail['goods']['onlineLotteryCount'] = $value->no;
+				$return[] = $lotteryDetail;
+			}
 		}
 		
 		$this->_data = $return;
