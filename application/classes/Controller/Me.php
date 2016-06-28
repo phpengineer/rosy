@@ -1,5 +1,5 @@
 <?php
-class Controller_User extends Controller_Render {
+class Controller_Me extends Controller_Render {
 	
 	/**
 	 * 我的中奖
