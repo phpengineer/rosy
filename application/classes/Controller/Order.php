@@ -70,7 +70,7 @@
 			$userCount = Business::factory('Record')->getRecordByPeriodId($period->id);
 			if($period->state == 0 || $period->state == 1) {
 				$lotteryDetail['lotteryId'] = $period->id;
-				$lotteryDetail['name'] = '第' . $period->no .'期';
+				$lotteryDetail['name'] = '第' . $period->id .'期';
 				$lotteryDetail['price'] = $goods->price;
 				$lotteryDetail['totalTicketCount'] = $goods->price;
 				$lotteryDetail['currentTicketCount'] = $period->number;
@@ -81,7 +81,7 @@
 				$lotteryDetail['goods']['onlineLotteryCount'] = $period->no;
 			} else {
 				$lotteryDetail['lotteryId'] = $period->id;
-				$lotteryDetail['name'] = '第' . $period->no .'期';
+				$lotteryDetail['name'] = '第' . $period->id .'期';
 				$lotteryDetail['price'] = $goods->price;
 				$lotteryDetail['totalTicketCount'] = $goods->price;
 				$lotteryDetail['totalUserCount'] = $userCount->count();

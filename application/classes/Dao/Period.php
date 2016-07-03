@@ -14,8 +14,15 @@ class Dao_Period extends Dao {
 	const STATE_JIANG = 1; // 状态：开奖中
 	const STATE_COMPLETE = 2;//状态：结束
 
-	
-	
+	//获取与$goodsId关联的全部在线期彩
+	public function getOnlineLotteryByGoodsId($goodsId) {
+		return DB::select('*')
+			->from($this->_tableName)
+			->where('state', '=', self::STATE_ON)
+			->and_where('sid', '=', $goodsId)
+			->as_object($this->_modelName)
+			->execute();
+	}
     
     /**
      *  获取商品期数信息
@@ -29,7 +36,7 @@ class Dao_Period extends Dao {
     		->as_object($this->_modelName)
     		->execute();
     }
-    
+
     /**
      * 分页获取期彩
      * @param int $pageSize
@@ -65,10 +72,12 @@ class Dao_Period extends Dao {
     		->execute();
     }
     
-    public function getCompleteLottery() {
+    public function getCompleteLottery($pageSize, $offset) {
     	return DB::select('*')
     		->from($this->_tableName)
     		->where('state', '=', self::STATE_COMPLETE)
+			->offset(($offset>1 ? ($offset-1)*$pageSize : 0))
+			->limit($pageSize)
     		->as_object($this->_modelName)
     		->execute();
     }

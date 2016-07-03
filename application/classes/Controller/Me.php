@@ -15,9 +15,10 @@ class Controller_Me extends Controller_Render {
 			$lotteryDetail = array();
 			$goods = Business::factory('Goods')->getGoodsByGoodsId($value->sid)->current();
 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
-			$lotteryDetail['lotteryId'] = $lottery->id;
-			$lotteryDetail['name'] = '第' . $lottery->no .'期';
-			$lotteryDetail['price'] = $goods->price;
+			//TODO:这个对不对?$lottery->$value
+			$lotteryDetail['lotteryId'] = $value->id;
+			$lotteryDetail['name'] = '第' . $value->id .'期';
+			$lotteryDetail['price'] = 1;
 			$lotteryDetail['completeTime'] = $value->kaijang_time;
 			$lotteryDetail['goods']['goodsId'] = $goods->id;
 			$lotteryDetail['goods']['name'] = $goods->name;
