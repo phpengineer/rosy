@@ -40,7 +40,11 @@
 			$period = Business::factory('Period')->getLotteryById($result->pid)->current();
 			if($result->code == 'OK') {
 				$orderInfo['state'] = 1;
+
+				//TODO:payTime是支付成功时间戳,这里用create_time是否合适?
 				$orderInfo['payTime'] = $result->create_time;
+
+				//TODO:payExpiredTime是支付过期的时间戳,用kaijang_time也不合适,应该是创建订单时间加上有效的等待时间,例如10分钟或者30分钟
 				$orderInfo['payExpiredTime'] = $period->kaijang_time;
 			} elseif($result->code == 'FAIL') {
 				$orderInfo['state'] = 4;
@@ -58,8 +62,9 @@
 					$orderInfo['payExpiredTime'] = $period->kaijang_time;
 				}
 			}
-			
-			$orderInfo['ticket'] = array(
+
+			//TODO:这里应该是一个数组,一个订单因为可能买了不止一份期彩,那么应该生成多个号码,这里是这个订单关联的号码的列表
+			$orderInfo['tickets'] = array(
 				'ticketId' => $period->id,
 				'code' => $period->no
 			);
@@ -68,21 +73,22 @@
 			$goods = Business::factory('Goods')->getGoodsByGoodsId($period->sid)->current();
 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 			$userCount = Business::factory('Record')->getRecordByPeriodId($period->id);
+			$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
 			if($period->state == 0 || $period->state == 1) {
 				$lotteryDetail['lotteryId'] = $period->id;
 				$lotteryDetail['name'] = '第' . $period->no .'期';
-				$lotteryDetail['price'] = $goods->price;
+				$lotteryDetail['price'] = 1;
 				$lotteryDetail['totalTicketCount'] = $goods->price;
 				$lotteryDetail['currentTicketCount'] = $period->number;
 				$lotteryDetail['totalUserCount'] = $userCount->count();
 				$lotteryDetail['goods']['goodsId'] = $goods->id;
 				$lotteryDetail['goods']['name'] = $goods->name;
 				$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
-				$lotteryDetail['goods']['onlineLotteryCount'] = $period->no;
+				$lotteryDetail['goods']['onlineLotteryCount'] = $lotteries->count();
 			} else {
 				$lotteryDetail['lotteryId'] = $period->id;
 				$lotteryDetail['name'] = '第' . $period->no .'期';
-				$lotteryDetail['price'] = $goods->price;
+				$lotteryDetail['price'] = 1;
 				$lotteryDetail['totalTicketCount'] = $goods->price;
 				$lotteryDetail['totalUserCount'] = $userCount->count();
 				$lotteryDetail['completeTime'] = $period->kaijang_time;
@@ -92,7 +98,10 @@
 				$lotteryDetail['luckyTicket']['ticketId'] = $period->id;
 				$lotteryDetail['luckyTicket']['code'] = $period->no;
 				$lotteryDetail['luckyDog']['userId'] = $period->uid;
+
 				$user = Business::factory('User')->getUserByUserId($period->uid);
+
+				//TODO:当获取用户名的时候,什么时候获取username什么时候获取nickname
 				$lotteryDetail['luckyDog']['username'] = $user->mobile ? $user->mobile : $user->username;
 			}
 			$return[] = $orderInfo;

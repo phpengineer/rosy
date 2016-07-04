@@ -21,7 +21,7 @@ class Controller_Lottery extends Controller_Render {
 				$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
 				$lotteryDetail['lotteryId'] = $value->id;
 				$lotteryDetail['name'] = '第' . $value->no .'期';
-				$lotteryDetail['price'] = $goods->price;
+				$lotteryDetail['price'] = 1;
 				$lotteryDetail['totalTicketCount'] = $goods->price;
 				$lotteryDetail['currentTicketCount'] = $value->number;
 				$lotteryDetail['totalUserCount'] = $userCount->count();
@@ -56,7 +56,7 @@ class Controller_Lottery extends Controller_Render {
 			$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
 			$lotteryDetail['lotteryId'] = $value->id;
 			$lotteryDetail['name'] = '第' . $value->no .'期';
-			$lotteryDetail['price'] = $goods->price;
+			$lotteryDetail['price'] = 1;
 			$lotteryDetail['totalTicketCount'] = $goods->price;
 			$lotteryDetail['currentTicketCount'] = $value->number;
 			$lotteryDetail['totalUserCount'] = $userCount->count();
@@ -83,7 +83,7 @@ class Controller_Lottery extends Controller_Render {
 		$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
 		$lotteryDetail['lotteryId'] = $value->id;
 		$lotteryDetail['name'] = '第' . $value->no .'期';
-		$lotteryDetail['price'] = $goods->price;
+		$lotteryDetail['price'] = 1;
 		$lotteryDetail['totalTicketCount'] = $goods->price;
 		$lotteryDetail['currentTicketCount'] = $value->number;
 		$lotteryDetail['totalUserCount'] = $userCount->count();
@@ -117,7 +117,7 @@ class Controller_Lottery extends Controller_Render {
 		$params = json_decode(Arr::get($_POST, 'params', ''), true);
 		$pageSize = !empty($params['pageSize']) ? $params['pageSize'] : 20;
 		$offset = !empty($params['offset']) ? $params['offset'] : 0;
-		$lottery = Business::factory('Period')->getCompleteLottery();
+		$lottery = Business::factory('Period')->getCompleteLottery($offset, $pageSize);
 		$return = array();
 		foreach($lottery as $value) {
 			$lotteryDetail = array();
@@ -126,7 +126,7 @@ class Controller_Lottery extends Controller_Render {
 			$userCount = Business::factory('Record')->getRecordByPeriodId($value->id);
 			$lotteryDetail['lotteryId'] = $value->id;
 			$lotteryDetail['name'] = '第' . $value->no .'期';
-			$lotteryDetail['price'] = $goods->price;
+			$lotteryDetail['price'] = 1;
 			$lotteryDetail['totalTicketCount'] = $goods->price;
 			$lotteryDetail['totalUserCount'] = $userCount->count();
 			$lotteryDetail['completeTime'] = $value->kaijang_time;

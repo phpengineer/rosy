@@ -39,6 +39,4 @@ class Dao_Order extends Dao {
     		->as_object($this->_modelName)
     		->execute();
     }
-    
-
 }

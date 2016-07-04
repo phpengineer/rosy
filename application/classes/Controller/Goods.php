@@ -33,12 +33,12 @@ class Controller_Goods extends Controller_Render {
 	 	$return = array();
 	 	if($result->count()) {
 	 		foreach($result as $key => $goods) {
-	 			$lottery = Business::factory('Period')->getLotteryCountByGoodsId($goods->id)->current();
+	 			$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
 	 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 	 			$return[$key]['goodsId'] = $goods->id;
 	 			$return[$key]['name'] = $goods->name;
 	 			$return[$key]['icon'] = Kohana::$config->load('default.host') . $picture->path;
-	 			$return[$key]['onlineLotteryCount'] = $lottery->no;
+	 			$return[$key]['onlineLotteryCount'] = count($lotteries);
 	 		}
 	 	}
 	 	$this->_data = $return;
@@ -57,12 +57,12 @@ class Controller_Goods extends Controller_Render {
 	 	$return = array();
 	 	if($result->count()) {
 	 		foreach($result as $key => $goods) {
-	 			$lottery = Business::factory('Period')->getLotteryCountByGoodsId($goods->id)->current();
+				$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
 	 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 	 			$return[$key]['goodsId'] = $goods->id;
 	 			$return[$key]['name'] = $goods->name;
 	 			$return[$key]['icon'] = Kohana::$config->load('default.host') . $picture->path;
-	 			$return[$key]['onlineLotteryCount'] = $lottery->no;
+	 			$return[$key]['onlineLotteryCount'] = count($lotteries);
 	 		}
 	 	}
 	 	$this->_data = $return;
@@ -81,17 +81,23 @@ class Controller_Goods extends Controller_Render {
 	 	$return = array();
 	 	if($result->count()) {
 	 		$goods = $result->current();
- 			$lottery = Business::factory('Period')->getLotteryCountByGoodsId($goods->id)->current();
+
+			//TODO:获取所有的goodsID关联的期彩
+ 			$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
  			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
  			$suppliers = Business::factory('Supplier')->getSupplierBySupplierId($goods->supplier_id);
- 			$lotteries = Business::factory('Period')->getLotteryById($lottery->id);
  			$return['goodsId'] = $goods->id;
  			$return['name'] = $goods->name;
  			$return['icon'] = Kohana::$config->load('default.host') . $picture->path;
- 			$return['image'] = array(Kohana::$config->load('default.host') . $picture->path);
+			$return['onlineLotteryCount'] = count($lotteries);
+
+			//TODO:这里images应该取得是$goods->content那一堆中的图片url,并且要拼接
+			//&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568880cc6e46e.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568880cc7ea2a.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568880cc93a1f.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568880cd1db84.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568880cd43905.jpg&quot;/&gt;&lt;img src=&quot;/Picture/Ueditor/2016-01-03/568880cd67f16.jpg&quot;/&gt;&lt;/p&gt;
+ 			//这个字符串的分割规则,先按照";"分割,遍历去除不包含"/"的,然后在按照"&"分割,去除不包含"/"的
+			$return['images'] = array(Kohana::$config->load('default.host') . $picture->path);
  			$return['price'] = $goods->price;
- 			$return['detail'] = $goods->content;
- 			$return['onlineLotteryCount'] = $lottery->no;
+ 			$return['detail'] = $goods->description;
+
  			if($suppliers->count()) {
  				$supplier = $suppliers->current();
  				$return['supplier'] = array(
@@ -123,6 +129,5 @@ class Controller_Goods extends Controller_Render {
 	 	}
 	 	$this->_data = $return;
 	}
-
 }
 ?>
