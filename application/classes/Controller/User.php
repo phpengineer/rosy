@@ -7,6 +7,8 @@ class Controller_User extends Controller_Render {
 	/**
 	 * 登记地址接口
 	 */
+
+	/*
 	public function action_address() {
 		$params = Arr::get($_POST, 'params', '');
 		$address = json_decode($params, true);
@@ -21,7 +23,7 @@ class Controller_User extends Controller_Render {
 			$this->failed(130001);
 		}
 
-	}
+	}*/
 	
 	/**
 	 * 注册
@@ -173,42 +175,41 @@ class Controller_User extends Controller_Render {
 	 /**
 	  * 设置手机号
 	  */
-	 public function action_mobile() {
-	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
-	 	$userId = !empty($params['userId']) ? $params['userId'] : 0;
-	 	$oldVcode = !empty($params['oldvcode']) ? $params['oldvcode'] : '';
-	 	$newVcode = !empty($params['newvcode']) ? $params['newvcode'] : '';
-	 	$newMobile = !empty($params['newMobile']) ? $params['newMobile'] : 0;
-	 	$oldMobile = !empty($params['oldMobile']) ? $params['oldMobile'] : 0;
-	 	if(Cache_Key::vcode($oldMobile)) {
-	 		return $this->failed(120001);
-	 	}
-	 	if($oldVcode != Cache_Key::vcode($oldMobile))  {
-	 		return $this->failed(120000);
-	 	}
-	 	if(!Misc::checkMobile($newMobile)) {
-	 		return $this->failed(120100);
-	 	}
-	 	$user = Business::factory('User')->getUserByMobile($newMobile);
-	 	if($user->count()) {
-	 		return $this->failed(120101);
-	 	}
-	 	if(Cache_Key::vcode($newMobile)) {
-	 		return $this->failed(120103);
-	 	}
-	 	if($newVcode != Cache_Key::vcode($newMobile))  {
-	 		return $this->failed(120102);
-	 	}
-	 	$values = array('userId' => $userId, 'mobile' => $newMobile);
-	 	$result = Business::factory('User')->update($values);
-	 	if($result) {
-	 		$this->success('设置手机号成功');
-	 	} else {
-	 		$this->failed(130000);
-	 	}
-	 	
+	 public function action_mobile()
+	 {
+		 $params = json_decode(Arr::get($_POST, 'params', ''), true);
+		 $userId = !empty($params['userId']) ? $params['userId'] : 0;
+		 $oldVcode = !empty($params['oldvcode']) ? $params['oldvcode'] : '';
+		 $newVcode = !empty($params['newvcode']) ? $params['newvcode'] : '';
+		 $newMobile = !empty($params['newMobile']) ? $params['newMobile'] : 0;
+		 $oldMobile = !empty($params['oldMobile']) ? $params['oldMobile'] : 0;
+		 if (Cache_Key::vcode($oldMobile)) {
+			 return $this->failed(120001);
+		 }
+		 if ($oldVcode != Cache_Key::vcode($oldMobile)) {
+			 return $this->failed(120000);
+		 }
+		 if (!Misc::checkMobile($newMobile)) {
+			 return $this->failed(120100);
+		 }
+		 $user = Business::factory('User')->getUserByMobile($newMobile);
+		 if ($user->count()) {
+			 return $this->failed(120101);
+		 }
+		 if (Cache_Key::vcode($newMobile)) {
+			 return $this->failed(120103);
+		 }
+		 if ($newVcode != Cache_Key::vcode($newMobile)) {
+			 return $this->failed(120102);
+		 }
+		 $values = array('userId' => $userId, 'mobile' => $newMobile);
+		 $result = Business::factory('User')->update($values);
+		 if ($result) {
+			 $this->success('设置手机号成功');
+		 } else {
+			 $this->failed(130000);
+		 }
 	 }
-	 
 	 
 	 public function action_nickname() {
 	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
@@ -227,7 +228,22 @@ class Controller_User extends Controller_Render {
 	 	if($result) {
 	 		$this->success('设置昵称成功!');
 	 	}
-	 	
 	 }
 
+	public function action_address() {
+		$params = json_decode(Arr::get($_POST, 'params', ''), true);
+		$userId = !empty($params['userId']) ? $params['userId'] : 0;
+		$address = !empty($params['address']) ? $params['address'] : '';
+		$value = array();
+		if(!$address)  {
+			return $this->failed(130000);
+		}
+		$value['address'] = $address;
+		$result = Business::factory('User')->updateByUserId($userId, $value);
+		if($result) {
+			$this->success('设置成功');
+		} else {
+			$this->failed(130001);
+		}
+	}
 }
