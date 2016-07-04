@@ -10,6 +10,8 @@ switch (strtoupper($_SERVER['ENVIRONMENT'])) {
 		$path = '../';
 		break;
 }
+
+
 $application = '../application';
 $modules = $path . 'kohana/modules';
 $system = $path . 'kohana/system';
