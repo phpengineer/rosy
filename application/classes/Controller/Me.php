@@ -103,8 +103,9 @@ class Controller_Me extends Controller_Render {
 					$user = Business::factory('User')->getUserByUserId($period->uid);
 					$lotteryDetail['luckyDog']['username'] = $user->mobile ? $user->mobile : $user->username;
 				}
+
+				$orderInfo['lottery'] = $lotteryDetail;
 				$return[] = $orderInfo;
-				$return[]['lottery'] = $lotteryDetail;
 			}
 			
 		}
