@@ -28,7 +28,9 @@ class Controller_Lottery extends Controller_Render {
 				$lotteryDetail['goods']['goodsId'] = $goods->id;
 				$lotteryDetail['goods']['name'] = $goods->name;
 				$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
-				$lotteryDetail['goods']['onlineLotteryCount'] = $value->no;
+
+				$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
+				$lotteryDetail['goods']['onlineLotteryCount'] = count($lotteries);
 				$return[] = $lotteryDetail;
 			}
 		}
@@ -63,7 +65,9 @@ class Controller_Lottery extends Controller_Render {
 			$lotteryDetail['goods']['goodsId'] = $goods->id;
 			$lotteryDetail['goods']['name'] = $goods->name;
 			$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
-			$lotteryDetail['goods']['onlineLotteryCount'] = $value->no;
+
+			$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
+			$lotteryDetail['goods']['onlineLotteryCount'] = count($lotteries);
 			$return[] = $lotteryDetail;
 		}
 		
@@ -93,7 +97,8 @@ class Controller_Lottery extends Controller_Render {
 		$lotteryDetail['goods']['name'] = $goods->name;
 		$lotteryDetail['goods']['price'] = $goods->price;
 		$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
-		$lotteryDetail['goods']['onlineLotteryCount'] = $value->no;
+		$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
+		$lotteryDetail['goods']['onlineLotteryCount'] = count($lotteries);
 		if($value->state == Dao_Period::STATE_COMPLETE) {
 			$lotteryDetail['luckyTicket']['ticketId'] = $value->id;
 			$lotteryDetail['luckyTicket']['code'] = $value->no;

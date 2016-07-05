@@ -57,11 +57,12 @@ class Controller_Goods extends Controller_Render {
 	 	$return = array();
 	 	if($result->count()) {
 	 		foreach($result as $key => $goods) {
-				$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
 	 			$picture = Business::factory('Picture')->getPictureByCoverId($goods->cover_id)->current();
 	 			$return[$key]['goodsId'] = $goods->id;
 	 			$return[$key]['name'] = $goods->name;
 	 			$return[$key]['icon'] = Kohana::$config->load('default.host') . $picture->path;
+
+				$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
 	 			$return[$key]['onlineLotteryCount'] = count($lotteries);
 	 		}
 	 	}

@@ -19,7 +19,7 @@ class Controller_Me extends Controller_Render {
 			$lotteryDetail['lotteryId'] = $value->id;
 			$lotteryDetail['name'] = '第' . $value->id .'期';
 			$lotteryDetail['price'] = 1;
-			$lotteryDetail['completeTime'] = $value->kaijang_time;
+			$lotteryDetail['completeTime'] = $value->kaijiang_time;
 			$lotteryDetail['goods']['goodsId'] = $goods->id;
 			$lotteryDetail['goods']['name'] = $goods->name;
 			$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
@@ -60,7 +60,7 @@ class Controller_Me extends Controller_Render {
 					$orderInfo['payTime'] = $value->create_time;
 				} elseif($value->code == 'FAIL') {
 					$orderInfo['state'] = 4;
-					$orderInfo['payExpiredTime'] = $period->kaijang_time;
+					$orderInfo['payExpiredTime'] = $period->kaijiang_time;
 				} elseif(!$value->code) {
 					$orderInfo['state'] = 0;
 				}
@@ -77,18 +77,20 @@ class Controller_Me extends Controller_Render {
 				if($period->state == 0 || $period->state == 1) {
 					$lotteryDetail['lotteryId'] = $period->id;
 					$lotteryDetail['name'] = '第' . $period->no .'期';
-					$lotteryDetail['price'] = $goods->price;
+					$lotteryDetail['price'] = 1;
 					$lotteryDetail['totalTicketCount'] = $goods->price;
 					$lotteryDetail['currentTicketCount'] = $period->number;
 					$lotteryDetail['totalUserCount'] = $userCount->count();
 					$lotteryDetail['goods']['goodsId'] = $goods->id;
 					$lotteryDetail['goods']['name'] = $goods->name;
 					$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
-					$lotteryDetail['goods']['onlineLotteryCount'] = $period->no;
+
+					$lotteries = Business::factory('Period')->getOnlineLotteryByGoodsId($goods->id);
+					$lotteryDetail['goods']['onlineLotteryCount'] = count($lotteries);
 				} else {
 					$lotteryDetail['lotteryId'] = $period->id;
 					$lotteryDetail['name'] = '第' . $period->no .'期';
-					$lotteryDetail['price'] = $goods->price;
+					$lotteryDetail['price'] = 1;
 					$lotteryDetail['totalTicketCount'] = $goods->price;
 					$lotteryDetail['totalUserCount'] = $userCount->count();
 					$lotteryDetail['completeTime'] = $period->kaijang_time;
