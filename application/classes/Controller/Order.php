@@ -12,12 +12,14 @@
  	 	 */	
  		public function action_create() {
  			$params = json_decode(Arr::get($_POST, 'params', ''), true);
- 			$lotteryId = Arr::get($params, 'lottoryId', 0);
+ 			$lotteryId = Arr::get($params, 'lotteryId', 0);
  			$ticketCount = Arr::get($params, 'ticketCount', 0);
  			$userId = Arr::get($params, 'userId', '');
 			if(!$ticketCount) {
 				return $this->failed(900002);
 			}
+
+			//TODO:$createSns是干嘛用的?
 			$createSn = $this->createSn();
 			$order = Business::factory('Order')->create($lotteryId, $createSn, $ticketCount, $userId, 2);
 			$data = array();

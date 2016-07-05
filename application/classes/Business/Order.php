@@ -2,6 +2,8 @@
  class Business_Order extends Business { 
 	
  	public function create($lotteryId, $sn, $price, $userId, $type, $prepay_id='') {
+		//TODO:这里的创建爱你逻辑是否和网站一致?
+
  		$data['uid'] = $userId;
  		$data['pid'] = $lotteryId;
  		$data['create_time'] = $_SERVER['REQUEST_TIME'];
