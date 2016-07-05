@@ -19,11 +19,32 @@
 				return $this->failed(900002);
 			}
 			$createSn = $this->createSn();
-			$order = Business::factory('Order')->create($lotteryId, $this->create_sn(), $ticketCount, $userId, 2);
+			$order = Business::factory('Order')->create($lotteryId, $createSn, $ticketCount, $userId, 2);
+			$data = array();
 			if($order) {
-				$this->success('成功创建订单!');
+				//$this->success('成功创建订单!');
+				$data['payData'] = '这里存放用于支付的加密数据';
+				$this->_data = $data;
 			}
  		}
+
+	 /**
+	  *  获取支付数据
+	  * @param int orderId 订单Id
+	  * @return json
+	  */
+	 public function action_pay() {
+		 $params = json_decode(Arr::get($_POST, 'params', ''), true);
+		 $orderId = Arr::get($params, 'orderId', 0);
+		 if(!$orderId) {
+			 return $this->failed(900002);
+		 }
+
+		 //TODO:这里的逻辑是根据orderId获取这个订单用于微信支付的数据
+		 $data = array();
+		 $data['payData'] = '这里存放用于支付的加密数据';
+		 $this->_data = $data;
+	 }
  		
  		/**
  		 * 订单详情
