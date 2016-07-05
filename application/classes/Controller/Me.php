@@ -60,13 +60,13 @@ class Controller_Me extends Controller_Render {
 					$orderInfo['payTime'] = $value->create_time;
 				} elseif($value->code == 'FAIL') {
 					$orderInfo['state'] = 4;
-					$orderInfo['payExpiredTime'] = $period->kaijiang_time;
+					$orderInfo['payExpiredTime'] = $period->kaijang_time;
 				} elseif(!$value->code) {
 					$orderInfo['state'] = 0;
 				}
 				
 				if($orderInfo['state'] != 4) {
-					if($time > $value->kaijiang_time) {
+					if($time > $period->kaijang_time) {
 						$orderInfo['state'] = 3;
 					}
 				}
@@ -93,7 +93,7 @@ class Controller_Me extends Controller_Render {
 					$lotteryDetail['price'] = 1;
 					$lotteryDetail['totalTicketCount'] = $goods->price;
 					$lotteryDetail['totalUserCount'] = $userCount->count();
-					$lotteryDetail['completeTime'] = $period->kaijiang_time;
+					$lotteryDetail['completeTime'] = $period->kaijang_time;
 					$lotteryDetail['goods']['goodsId'] = $goods->id;
 					$lotteryDetail['goods']['name'] = $goods->name;
 					$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
