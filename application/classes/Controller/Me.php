@@ -66,7 +66,7 @@ class Controller_Me extends Controller_Render {
 				}
 				
 				if($orderInfo['state'] != 4) {
-					if($time > $value->kaijang_time) {
+					if($time > $value->kaijiang_time) {
 						$orderInfo['state'] = 3;
 					}
 				}
@@ -93,7 +93,7 @@ class Controller_Me extends Controller_Render {
 					$lotteryDetail['price'] = 1;
 					$lotteryDetail['totalTicketCount'] = $goods->price;
 					$lotteryDetail['totalUserCount'] = $userCount->count();
-					$lotteryDetail['completeTime'] = $period->kaijang_time;
+					$lotteryDetail['completeTime'] = $period->kaijiang_time;
 					$lotteryDetail['goods']['goodsId'] = $goods->id;
 					$lotteryDetail['goods']['name'] = $goods->name;
 					$lotteryDetail['goods']['icon'] = Kohana::$config->load('default.host') . $picture->path;
