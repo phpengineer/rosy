@@ -113,6 +113,27 @@ class Controller_User extends Controller_Render {
  		unset($user);
  		$this->_data = $data;
 	 }
+
+	/**
+	 * 用户信息
+	 */
+	public function action_info() {
+		$params = json_decode(Arr::get($_POST, 'params', ''), true);
+		$userId = !empty($params['userId']) ? $params['userId'] : 0;
+		if(!$userId) {
+			return $this->failed(201);
+		}
+		$data = array();
+		$user = Business::factory('User')->getUserByUserId($userId)->current();
+		$data['userId'] = $user->id;
+		$data['username'] = $user->username;
+		$data['avatar'] = $user->headimgurl ? $user->headimgurl : '';
+		$data['mobile'] = $user->mobile;
+		$data['address'] = $user->address;
+		$data['token'] = 'dfafasdfdsafasdf';//此token放到redis里，redis控制是否过期
+		unset($user);
+		$this->_data = $data;
+	}
 	 
 	 /**
 	  * 退出登录
@@ -128,7 +149,7 @@ class Controller_User extends Controller_Render {
 	 	$postImage = file_get_contents('php://input', 'r');
 	 	$params = json_decode(Arr::get($_POST, 'params', ''), true);
 	 	$userId = !empty($params['userId']) ? $params['userId'] : 0;
-	 	if($userId) {
+	 	if(!$userId) {
 	 		return $this->failed(201);
 	 	}
 	 	if($postImage) {
