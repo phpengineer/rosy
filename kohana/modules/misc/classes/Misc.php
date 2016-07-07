@@ -286,5 +286,11 @@ class Misc {
 
 		return TRUE;
 	}
+	
+	public static function generatePrizeNum($num) {
+    	$numbers = range(10000001,$num+10000001);
+   		shuffle($numbers);
+    	return implode(',',$numbers);
+	}
 
 }
